@@ -25,15 +25,15 @@ const getProducts = async (): Promise<CartItemType[]> =>
 
 const App = () => {
   const [cartOpen, setCartOpen] = useState(false);
-  const [cartItems, setCartItems] = useState([] as CartItemType[])
+  // const [cartItems, setCartItems] = useState([] as CartItemType[])
   const { data, isLoading, error } = useQuery<CartItemType[]>('products', getProducts);
   console.log(data);
 
-  const getTotalItems = (items: CartItemType[]) => null;
+  // const getTotalItems = (items: CartItemType[]) => null;
 
   const handleAddToCart = (clickedItem: CartItemType) => null;
 
-  const handleRemoveFromCart = () => null;
+  // const handleRemoveFromCart = () => null;
 
   if (isLoading) return <LinearProgress />;
   if (error) return <div>Something went wrong ...</div>;
@@ -43,16 +43,17 @@ const App = () => {
       <div>
         <h1>Mii-shopx</h1>
       </div>
-      <Drawer anchor='right' open={cartOpen} onClose={() => setCartOpen(false)}>
+      <Drawer anchor="right" open={cartOpen} onClose={() => setCartOpen(false)}>
         Cart goes here
       </Drawer>
       <StyledButton onClick={() => setCartOpen(true)}>
-        <Badge badgeContent={getTotalItems(cartItems)} color='error'>
+        {/* badgeContent={getTotalItems(cartItems)} */}
+        <Badge color="error">
           <AddShoppingCartIcon />
         </Badge>
       </StyledButton>
       <Grid container spacing={3}>
-        {data?.map(item => (
+        {data?.map((item) => (
           <Grid item key={item.id} xs={12} sm={4}>
             <Item item={item} handleAddToCart={handleAddToCart} />
           </Grid>
