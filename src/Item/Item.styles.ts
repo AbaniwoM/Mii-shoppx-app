@@ -5,15 +5,27 @@ export const Wrapper = styled.div`
   justify-content: space-between;
   flex-direction: column;
   width: 92%;
-  border: 1px solid lightblue;
+  border: 2px solid lightblue;
   border-radius: 20px;
   height: 100%;
-  margin-top: 70px;
+  margin-top: 110px;
   margin-left: 17px;
   overflow-x: hidden;
+  color: white;
+  font-size: 1.1rem;
+  line-height: 27px;
 
   button {
     border-radius: 0 0 20px 20px;
+    color: white;
+    font-weight: bold;
+    border-top: 1px solid lightblue;
+  }
+
+  button:hover {
+    background-color: white;
+    font-weight: bold;
+    color: black;
   }
 
   img {

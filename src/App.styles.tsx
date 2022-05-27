@@ -5,9 +5,14 @@ export const Wrapper = styled.div`
   margin: 40px;
 `;
 
+export const div = styled.h1`
+  font-family: "Lobster", cursive;
+`;
+
 export const StyledButton = styled(IconButton)`
   position: fixed;
-  z-index: 100;
+  z-index: 500;
   right: 50px;
-  top: 20px;
+  top: 13px;
+  color: white;
 `;

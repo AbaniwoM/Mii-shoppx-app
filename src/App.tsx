@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useQuery } from "react-query";
 // Components
 import Item from './Item/Item';
+import Cart from './Cart/Cart';
 import Drawer from '@material-ui/core/Drawer';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Grid from '@material-ui/core/Grid';
@@ -25,30 +26,85 @@ const getProducts = async (): Promise<CartItemType[]> =>
 
 const App = () => {
   const [cartOpen, setCartOpen] = useState(false);
-  // const [cartItems, setCartItems] = useState([] as CartItemType[])
+  const [cartItems, setCartItems] = useState([] as CartItemType[]);
   const { data, isLoading, error } = useQuery<CartItemType[]>('products', getProducts);
   console.log(data);
 
-  // const getTotalItems = (items: CartItemType[]) => null;
+  const getTotalItems = (items: CartItemType[]) => items.reduce((ack: number, item) => ack + item.amount, 0);
 
-  const handleAddToCart = (clickedItem: CartItemType) => null;
+  const handleAddToCart = (clickedItem: CartItemType) => {
+    setCartItems(prev => {
+      // 1. Is the item already added in the cart?
+      const isItemInCart = prev.find(item => item.id === clickedItem.id);
 
-  // const handleRemoveFromCart = () => null;
+      if (isItemInCart) {
+        return prev.map(item => (
+          item.id === clickedItem.id ? { ...item, amount: item.amount + 1} : item
+        ));
+      }
+      //First time the item is added
+      return [...prev, { ...clickedItem, amount: 1}];
+    });
+  };
+
+  const handleRemoveFromCart = (id: number) => {
+    setCartItems(prev =>
+      prev.reduce((ack, item) => {
+        if (item.id === id) {
+          if (item.amount === 1) return ack;
+          return [...ack, { ...item, amount: item.amount - 1 }];
+        } else {
+          return [...ack, item];
+        }
+      }, [] as CartItemType[])
+    );
+  };
 
   if (isLoading) return <LinearProgress />;
-  if (error) return <div>Something went wrong ...</div>;
+  if (error) return <div style={{color: "white", fontSize: "1.2rem", marginTop: "20px", marginLeft: "20px"}}>Something went wrong ...</div>;
 
   return (
     <Wrapper>
-      <div>
-        <h1>Mii-shopx</h1>
+      <div
+        style={{
+          backgroundColor: "#121212",
+          backgroundSize: "cover",
+          height: "12vh",
+          width: "100%",
+          right: "0px",
+          top: "0px",
+          zIndex: 1,
+          position: "fixed",
+        }}
+      >
+        <div>
+          <h1
+            style={{
+              fontFamily: "Lobster",
+              fontSize: "2.3rem",
+              color: "white",
+              marginLeft: "50px",
+              marginTop: "14px",
+              position: "relative",
+            }}
+          >
+            Mii-shoppx
+          </h1>
+        </div>
+        <Drawer
+          anchor="right"
+          open={cartOpen}
+          onClose={() => setCartOpen(false)}
+        >
+          <Cart
+            cartItems={cartItems}
+            addToCart={handleAddToCart}
+            removeFromCart={handleRemoveFromCart}
+          />
+        </Drawer>
       </div>
-      <Drawer anchor="right" open={cartOpen} onClose={() => setCartOpen(false)}>
-        Cart goes here
-      </Drawer>
       <StyledButton onClick={() => setCartOpen(true)}>
-        {/* badgeContent={getTotalItems(cartItems)} */}
-        <Badge color="error">
+        <Badge badgeContent={getTotalItems(cartItems)} color="error">
           <AddShoppingCartIcon />
         </Badge>
       </StyledButton>
