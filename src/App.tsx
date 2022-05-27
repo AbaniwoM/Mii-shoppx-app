@@ -19,6 +19,7 @@ export type CartItemType = {
   price: number;
   title: string;
   amount: number;
+  items: string;
 }
 
 const getProducts = async (): Promise<CartItemType[]> =>
@@ -48,13 +49,13 @@ const App = () => {
   };
 
   const handleRemoveFromCart = (id: number) => {
-    setCartItems(prev =>
+    setCartItems(prev => 
       prev.reduce((ack, item) => {
         if (item.id === id) {
           if (item.amount === 1) return ack;
-          return [...ack, { ...item, amount: item.amount - 1 }];
+          return [...ack, { ...item, amount: item.amount - 1}];
         } else {
-          return [...ack, item];
+          return [...ack, item]
         }
       }, [] as CartItemType[])
     );
@@ -99,8 +100,7 @@ const App = () => {
           <Cart
             cartItems={cartItems}
             addToCart={handleAddToCart}
-            removeFromCart={handleRemoveFromCart}
-          />
+            removeFromCart={handleRemoveFromCart} cartOpen={[]}          />
         </Drawer>
       </div>
       <StyledButton onClick={() => setCartOpen(true)}>

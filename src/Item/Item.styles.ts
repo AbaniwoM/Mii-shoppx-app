@@ -9,11 +9,16 @@ export const Wrapper = styled.div`
   border-radius: 20px;
   height: 100%;
   margin-top: 110px;
-  margin-left: 17px;
+  margin-left: 13px;
   overflow-x: hidden;
   color: white;
   font-size: 1.1rem;
   line-height: 27px;
+  @media only screen and (max-width: 480px) {
+    width: 105%;
+    margin-left: -8px;
+    margin-top: 60px;
+  }
 
   button {
     border-radius: 0 0 20px 20px;

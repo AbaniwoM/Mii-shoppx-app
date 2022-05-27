@@ -11,9 +11,29 @@ export const Wrapper = styled.div`
     flex: 1;
   }
 
-  .information, .buttons {
+  .information {
     display: flex;
     justify-content: space-between;
+  }
+
+  .btn1 {
+    @media only screen and (max-width: 480px) {
+    margin-right: 7px;
+    }
+  }
+
+  .btn2 {
+    @media only screen and (max-width: 480px) {
+    margin-left: 7px;
+    }
+  }
+
+  .buttons {
+    display: flex;
+    justify-content: space-between;
+    @media only screen and (max-width: 480px) {
+      font-size: 0.8rem;
+    }
   }
 
   img {
@@ -21,5 +41,8 @@ export const Wrapper = styled.div`
     object-fit: cover;
     margin-left: 40px;
     margin-top: 8px;
+    @media only screen and (max-width: 480px) {
+      margin-left: 12px;
+    }
   }
 `;
